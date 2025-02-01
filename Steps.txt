@@ -1,0 +1,369 @@
+60. Project - Phase 3 (Part b)
+again change the form type to 
+formtype encrypt - multiform formdata 
+
+
+we should remove required tag from the form  for the image field 
+
+in addnew list form we shoul dadd required field ..
+
+
+In backend 
+we should make changes to handle the new change 
+
+as did in the new listing post middleware 
+make change in the put middleware adding upload.single ("listing[image])
+
+same changes in the controller section with extracting the  url and filepath from the req.file object . 
+but in the updation wea re updating with  find and update query . 
+in this query they are passing the req.body object . which doesnot contain the file object which is present in req.file 
+if user doesnot provide image 
+we should check the req.file object is defined or not . 
+In JS to check wether the file is defined or not 
+if(   typeOf  req.file  !== "undefined" )
+
+
+
+
+preview section in edit page .. 
+
+to develope a preview section in the edit form so that user will have an idea to change the image or not 
+
+creating a small div and displaying there .
+
+problem  high quality        that wuality is not required we should have general idea preview pixels 
+
+tranformation of images  
+cloudinary     pathparams after uploads/ e_blur 
+
+before rendering the edit form   access the image url and using replacing methor 
+replace("/upload,"/desided")
+
+
+
+
+add this in resume ... tranformation qptimization 
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+The Map -Getting Started with Maps
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+This will be relating to the location of the listing related to the single listing . 
+
+we have so many options for maps API . 
+
+here we will use google maps api  - 
+other functionalities we can explore . 
+we are not using it because google maps asks credit card .
+
+MAPBOX
+
+we will be using the public key that will be kept in the env file . we should not be keeping that in the public folder . 
+
+This access token will be used for authentication by Map box .
+Map box will accept only requests which contain the access  token
+
+
+https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
+
+
+map box -  co ordinates first lattitude and then longitude .
+
+generally first longitude and then lattitude
+
+
+script file will be written in seperate public folder and there we cannot access the environmental variables of .env file 
+
+so we need to access the environmental variable in the singlelisting and then access the variable directly in the map.js
+
+we have created map.js for script but <script tag is not necessary 
+
+I go an erro rbecause of the rendering of the map.js 
+in boiler plate we have body of the single listing 
+in single listing i should add the script inside the body tag becasue outsine the body tags will be excludede in the layOut .
+
+
+till Now we stored the cordinates as the  constant , we need to vary the coordinates as per the listings location .
+
+Geocoding is the process of converting the address in to the    geographic cordinates . 
+which you can use to place markers or position  on the map . 
+
+there can be many geocoding apis available 
+
+when we are entering the address in the   aamzon or any website if they implement forward geocoding and backward geocoding .  
+
+the address we are entering - convert into frward geocoding and they will be searcing the nearby cordinates and those coordinates will be backward geocoding and then will be appearing in the suggestions . 
+
+https://docs.mapbox.com/api/search/geocoding/
+
+
+import 
+https://github.com/mapbox/mapbox-sdk-js
+
+forward and backward geocoding .
+https://github.com/mapbox/mapbox-sdk-js/blob/main/docs/services.md
+
+
+in controller section we are converting the address to  cordinates through geocoding . 
+
+we are requirinbg th enpmmapbx client 
+https://www.npmjs.com/package/@mapbox/mapbox-sdk
+
+we are requiring the geoservices . 
+
+in the create postaddnewListing controller service function 
+when this is invoked with the client request . 
+https://github.com/mapbox/mapbox-sdk-js/blob/main/docs/services.md#forwardgeocode
+geocodingClient.forwardGeocode({
+  query: 'Paris, France',
+  limit: 2
+})
+  .send()
+  .then(response => {
+    const match = response.body;
+  });
+
+
+  since the function is async function with async keyword we are removing .then   
+
+the configs in the forward limit is bydefault set to 5 . 
+for suppose if user enters india there are many coordinates in the response , to limit them , we have set the limit to 5 byDefault .
+
+response.body.features
+
+features is the array   of the objects .
+the number of objects in the array depends on the number of the value given to the limit .
+to access the array with limit 1 [0]
+
+
+
+we can store the cordinates in the db with listing model by creating another field called cordinates field name .
+but we have a better option called geoJSON 
+
+
+
+GeoJSON
+https://www.mongodb.com/docs/manual/reference/geojson/
+
+https://mongoosejs.com/docs/geojson.html
+
+The data we are receiving from the mapBox is in geoJSON format 
+
+lattitude and longitude general order 
+but in mapBox its reverse 
+Why geoJSON
+
+mongodb database  inbuilt functionalities 
+
+for example when we are in hyderabad and opening airbnb websiyte for near our surroundings we need to do some operations on the db to find the nearing listings . - db has some inbuilt functions .
+
+After modifying the model according to thegeoJSON 
+
+Time to create the dynamic map for each listing bcs at present it is static .
+
+It can be done using marker .from mapBox
+
+
+https://docs.mapbox.com/help/tutorials/custom-markers-gl-js/
+
+
+https://docs.mapbox.com/mapbox-gl-js/api/markers/
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+61. Project - Phase 3 (Part c)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+we are  creating filters UI and restrunctiring minor things.
+Then search UI 
+
+1.filters div 
+
+create a div  for all filters .
+Then create a div for each filter 
+then add icon in it and then text 
+
+foe eah filter div 
+ icon should be a div  and then text shouldbe para
+   <!-- <div id="filter">
+            <div>
+                <i class="fa-solid fa-fire"></i>
+
+            </div>
+            <div>
+                Trending
+            </div>
+            
+        </div> --> I have used  this 
+
+        I have created two divs 
+        instead one div and one p
+
+ .filters{
+        display : flex ;
+        margin-top: 50px;
+        margin-bottom: 100px ;
+        justify-content: baseline ;
+        align-items: center ;
+        justify-content:space-evenly;
+    }
+
+    previously i have this styling to  bring each filter in same line and one after another  
+    but we should keep flex wrap 
+
+
+    text align center  for each filter stype property gave icons to move center not text why ?
+
+
+    before hover - light dark   after dark - more  dark 
+    
+    After this    for functionality 
+
+    modifying the modellisting 
+
+    add a category field and in that type is string and a predifined  enum datatype  which consist of  all the elements in the filter .
+
+    while  creating the listing we will provide user some dropdowns with the filters  options and then 
+
+
+    ---switch  from   bootstrap 
+    checkBox - > switch 
+
+    form-check-reverse-class
+
+
+    This  is for Display after taxes   in showing the price of the listing  - event listeners 
+
+this can be achieved by event listeners - consider event .
+  in script   we should access the document element using the id  
+  Document.getElment ById
+
+  click event  param   and a callback function .
+
+
+
+  on opening console  or  any devide
+  the filter icons will be  disrorted .
+
+This can be avoided by adding mediaquery to the div or 
+by adding a bootstrap class . 
+
+
+
+Tax switch functionalities------------------------------------------------------------
+
+To hide element   ---- 
+  -   display hidden  -  doesnot takes div place
+  -   visibility none    takes div place
+
+here  i have named the element with id  .
+as there are many group oof listigs    not  an single listing element so we are naming the element with class 
+
+for loop   of each element 
+
+element.style.display 
+
+  if- != inline 
+
+     inline 
+  else 
+     none
+
+
+
+     Reverse was not working with reverse class untill we found out that bootstrap version is  changed 
+
+
+
+-------------Search Option
+
+inside a div and margin start as auto wit class .and navar class also 
+margin start auto
+
+search styling 
+padding topright bottom left 
+
+
+Backend feature 
+
+
+
+
+
+
+==============================================================================
+Hosting 
+==============================================================================
+
+first create a n account in mongo db 
+
+Then create a cluster 
+
+use the connection string in localenvirammnet . 
+
+Before moving to finaldeployment state -  mongo session store 
+express sessions .  by default session storage will be stored in local storage .
+
+Compatable session stores.
+mongo connect 
+
+mongo session npm 
+
+same like session but store is  mongodb 
+session willhave multiple options . 
+
+Touch after - Exlanation . = if user logged in to any website , if user closes the tab ,  and again if he opens the store then he no need to relogin if we have this option .
+            - if there is no change in session  so no need toupdate the session right But when refresing the page updates the session again and again if user refreshes .
+            session will be updated when we interact wit server side , 
+
+
+
+========================
+Deplyment with Render .
+
+before deploying on render we will make change in the package json file . 
+
+weshould pecify node version in the package.sjon file . 
+
+node -v
+
+
+Next is toconnect to gitHub account .
+
+Proces of deployment ..localsystem - push to private git hub    render willaccess the information from gitHub 
+
+New features will be pushed to gitHub and render willbe deployed in production .
+
+
+
+========================================
+
+Pushing Code to gitHub ..
+
+1. Secretvalue for session  and  mongo db session . should be in .env 
+
+we should not push .env file into the git hub .
+and also node modules.
+
+Git Init 
+.DS_store   should not be pushed  which is created in Mac 
+
+IGNORE  - > .gitIgnore 
+
+Touch .gitignore // case sensitive .
+
+we should specify the files and folders name in the gitignore .
+.env  -filename 
+node_modules/      -  folder name 
+
+Mac dsstore .
+
+if we want to be  ignoring any specific  which is existing anywhere from the project we shoul dadd the file name with a specialsyntax 
+
+**/{filename}  

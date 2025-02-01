@@ -1,0 +1,21 @@
+the version of EJS you're likely using in Node is not the same as the version mam used in her code; in the Node version, <%= escapes the HTML going into the buffer, while <%- does not
+@saitejaassr123
+<%= %> this works for your system na
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

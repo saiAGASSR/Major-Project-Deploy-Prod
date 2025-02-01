@@ -1,0 +1,271 @@
+
+<% layout('/layouts/boilerplate.ejs') -%> 
+<style>
+
+    .filters{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        /* justify-content: space-evenly; */
+    }
+
+    .filtersLeft{
+        display : flex ;
+        flex-wrap: wrap;
+        margin-top: 25px;
+        margin-bottom: 25px ;
+        justify-content: baseline ;
+        align-items: center ;
+    }
+
+    #filter{
+        margin-right: 30px;
+        text-align: center;
+        opacity: 0.7;
+    }
+
+    #filter:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    .taxSwicthPrice{
+        display: none;
+    }
+
+
+    .taxStyle{
+        padding: 10px;
+        /* display: flex; */
+        /* flex-wrap: wrap; */
+        /* flex-direction:; */
+    }
+    /* tax switch  */
+
+
+
+
+    .switchRight{
+        height: 3.25rem;
+        border: 0.5px solid grey;
+        border-radius: 1rem;
+        padding :5px   10px 0 10px ; 
+        /* box-shadow: 5px 10px; */
+    }
+
+    #taxLable{
+        /* margin-left: 20px; */
+    }
+
+    #taxInput{
+        margin-left: 20px;
+    }
+
+</style>
+
+<body>
+    <!-- <h1 class="offset-5 mt-5 mb-5">All Listings </h1> -->
+    <div class="filters">  
+
+        
+        <div class="filtersLeft">
+
+
+                <div id="filter">
+                    <div>
+                        <i class="fa-solid fa-fire"></i>
+                    </div>               
+                    <p>Trending</p>       
+                </div>
+        
+                <div id="filter">
+                    <div>
+                        <i class="fa-solid fa-house-chimney-window"></i>
+                    </div>               
+                    <p>Rooms</p>       
+                </div>
+        
+                <div id="filter">
+                    <div>
+                        <i class="fa-solid fa-mountain-city"></i>
+                                            </div>               
+                    <p>Cottage</p>       
+                </div>
+        
+                <div id="filter">
+                    <div>
+                        <i class="fa-solid fa-umbrella-beach"></i>
+                    </div>               
+                    <p>Beach</p>       
+                </div>
+        
+                <div id="filter">
+                    <div>
+                        <i class="fa-solid fa-mountain-sun"></i>
+                    </div>               
+                    <p>Mountain</p>       
+                </div>
+        
+                <div id="filter">
+                    <div>
+                        <i class="fa-solid fa-snowflake"></i>
+                    </div>               
+                    <p>Arctic</p>       
+                </div>
+        
+                <div id="filter">
+                    <div>
+                        <i class="fa-solid fa-tractor"></i>
+                    </div>               
+                    <p>Farm</p>       
+                </div>
+        
+                <div id="filter">
+                    <div>
+                        <i class="fa-solid fa-water"></i>
+                        </div>               
+                    <p>Lake</p>       
+                </div>
+        
+                <div id="filter">
+                    <div>
+                        <i class="fa-solid fa-mountain-city"></i>
+                                            </div>               
+                    <p>Cottage</p>       
+                </div>
+        
+                <div id="filter">
+                    <div>
+                        <i class="fa-solid fa-umbrella-beach"></i>
+                    </div>               
+                    <p>Beach</p>       
+                </div>
+        
+                <div id="filter">
+                    <div>
+                        <i class="fa-solid fa-mountain-sun"></i>
+                    </div>               
+                    <p>Mountain</p>       
+                </div>
+        
+           
+
+
+
+        </div>
+        <!-- Switch Div  -->
+
+        <div class="switchRight">
+
+            <!-- <div class="form-check  form-check-reverse  form-switch">
+                <input class="form-check-reverse-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-reverse-label" for="flexSwitchCheckDefault">show me prices after Tax</label>
+            </div> -->
+
+            <div class="form-check form-switch form-check-reverse taxStyle">
+                <div id="taxInput">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse">
+
+                </div>
+                <div id="taxLable">
+                    <label class="form-check-label" for="flexSwitchCheckReverse">Show prices after Tax</label>
+
+                </div>
+            </div>
+              
+        </div>
+
+
+        <!-- Switch Div  -->
+
+
+
+
+      
+        
+
+
+    </div>
+
+
+
+
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1  row-cols-1  mt-3  allCards ">
+        <%  for (let eachList of allListings ) {  %>
+            <a href="/listings/<%= eachList._id %>"  class="allListingsAnchorTag">
+
+                <div class="card col listing-card">
+                    <img 
+                        src="<%= eachList.image.url %>" 
+                        class="card-img-top" 
+                        alt="Listings" 
+                        style="height: 20rem;"
+                    />
+                        
+                    <div class="card-img-overlay">
+                        </div>
+                    <div class="card-body">
+                       
+                      <p class="card-text">
+                        <b><%= eachList.title %></b>
+                        <br>
+                        <%= eachList.price.toLocaleString('en-IN',{
+                            maximumFractionDigits : 2 ,
+                            style :'currency',
+                            currency : 'INR'
+                        })  %> /night   
+                        <% let afterGST =  eachList.price + .18 * eachList.price %>
+                         <i class="taxSwicthPrice">  Including Tax <%= afterGST.toLocaleString('en-IN',{
+                            maximumFractionDigits : 2 ,
+                            style :'currency',
+                            currency : 'INR'
+                        })  %>  </i> 
+
+                      </p>
+
+                    </div>
+                  </div>
+
+            </a>   
+        <%   } %>      
+    </div>
+    <div>
+        <form method="POST" action="/listings?_method=DELETE">
+            <button class="btn btn-danger offset-5 mb-5" disabled  >Delete all listings </button>
+        </form>
+    </div>
+
+</body> 
+
+
+<script>
+    let taxSwitch = document.getElementById("flexSwitchCheckReverse");
+    taxSwitch.addEventListener("click",(()=>{
+
+        let taxText = document.getElementsByClassName("taxSwicthPrice");
+
+        // taxText.style.display="block"
+
+        console.log(taxText);
+        // taxText.forEach(element => {
+        //     element.style.display = "inlione"
+        // });
+
+        for(element of taxText) {
+
+
+            if( element.style.display != "inline"){
+                    // element.style.display = "block"   ->nextline 
+                    element.style.display = "inline"
+                    element.style.fontFamily = "Serif"
+                    element.style.marginLeft = "15px"
+            } else{
+                element.style.display = "none"
+            }
+
+
+        }
+
+
+    }))
+</script>

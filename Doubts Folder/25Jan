@@ -1,0 +1,44 @@
+Filters Functionality .
+
+
+
+
+So for the filters functionality to work we are modifying the listing model to have category  of type String .
+Here why we are adding enum datatype of with some default filters ?
+
+And we will provide dropDown to user while creating the listing right .
+
+And for each filter should i add a get request to the  backend to (/filters) and then redirect to the listing page with specific category after querying and passing the listings data to home page  ?)
+
+How to differentiate the filter that user clicked on filters icon  to  pass to the query with specific filter value  ?
+
+is  only this way possible  of  get request and redirecting to listings page  or any other way ? 
+
+what if we converts it into react they what is th solutio over there ?
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ---------------------------------
+ ---------------------------------
+ How to add that scrollfor the filters 
